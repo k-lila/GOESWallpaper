@@ -36,7 +36,7 @@ def runner(satelite, instrumento, banda, filtro):
             datahora_nova = None
             update = True
             try:
-                with open(file='recente.picke', mode='rb') as recent:
+                with open(file='recente.pickle', mode='rb') as recent:
                     datahora_antiga = pickle.load(recent)
             except:
                 pass
@@ -48,7 +48,7 @@ def runner(satelite, instrumento, banda, filtro):
                 banda=banda,
                 filtro=filtro
             )
-            with open(file='recente.picke', mode='rb') as recent:
+            with open(file='recente.pickle', mode='rb') as recent:
                 datahora_nova = pickle.load(recent)
             if datahora_nova != datahora_antiga:
                 current_wallpaper.update_img()

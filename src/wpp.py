@@ -37,7 +37,7 @@ class GOESWallpaper(object):
         status_code = requests.get(url=self.link_img, timeout=1).status_code
         if status_code == 200:
             self.working = True
-            with open('recente.picke', mode='wb') as recente:
+            with open('recente.pickle', mode='wb') as recente:
                 pickle.dump(f'{self.data_recente} {self.link_img}', recente)
             recente.close()
         return None
