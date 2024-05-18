@@ -3,7 +3,7 @@ import re
 import requests
 import pandas as pd
 
-timeout = 5
+timeout = 1
 
 # ==================================================================================================================== #
 # retorna uma str contendo o html do link
@@ -46,7 +46,7 @@ def filtroPesquisa(conjunto, gate=set(), key=set()):
 # motor de procura, retorna o conjunto de diretórios mapeados, limitado pela função filtro
 
 
-def iteradorMaluco(htmlRoot, funcaoFiltro, gate=set(), key=set()):
+def motor(htmlRoot, funcaoFiltro, gate=set(), key=set()):
 
     conjuntoDiretorios = {htmlRoot}
     conjuntoProcura = {htmlRoot}
@@ -97,6 +97,7 @@ def getFiles(diretorio):
         # ----------------------------------------------------- append lista_dataframe
         lista_dataframe.append([diretorio + link, dataHora, tamanho])
     df = pd.DataFrame(lista_dataframe, columns=['link', 'data', 'tamanho (bytes)'])
+
     return df.sort_values(by='data', ascending=False, ignore_index=True)  # mais recente ao mais antigo
 
 # -------------------------------------------------------------------------------------------------------------------- #
@@ -107,29 +108,10 @@ def imageFinder(dataframe, resolucao, data=None):
     resolucao += '.jpg'
     df_resolucao = dataframe.loc[dataframe['link'].str.endswith(resolucao)]
     df_resolucao = df_resolucao.reset_index(drop=True)
-
-
-
-
     if data:
-
-
         data = datetime.strptime(data, '%d/%m/%Y').date()
-
-
-
         novo_df = df_resolucao.loc[df_resolucao['data'].dt.date == data]
-
-
-
-
-
-
         return novo_df.reset_index(drop=True)
-
-
-
-
     else:
         return df_resolucao.iloc[0]
 

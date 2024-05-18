@@ -3,7 +3,7 @@ import pickle
 import time
 import requests
 import pandas as pd
-from source import wpp
+from src import wpp
 
 # ==================================================================================================================== #
 

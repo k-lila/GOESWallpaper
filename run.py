@@ -4,14 +4,12 @@ import datetime
 import pickle
 import requests
 
-from source import wpp
-from source import biblioteca_auxiliar as aux
+from src import wpp
+from src import biblioteca_auxiliar as aux
 
 # ==================================================================================================================== #
 
-
 def partida():
-
     config_dict = None
     try:
         with open(file='config.pickle', mode='rb') as arquivo:
@@ -29,10 +27,7 @@ def partida():
             config_dict = pickle.load(arquivo)
         arquivo.close()
     return config_dict
-
-# -------------------------------------------------------------------------------------------------------------------- #
-
-
+# ----------------------------------------------------------- #
 def runner(satelite, instrumento, banda, filtro):
     current_wallpaper = wpp.GOESWallpaper()
     while True:
@@ -45,13 +40,14 @@ def runner(satelite, instrumento, banda, filtro):
                     datahora_antiga = pickle.load(recent)
             except:
                 pass
-
-            imagem = current_wallpaper.get_image(resolucao='1808x1808',
-                                                 satelite=satelite,
-                                                 instrumento=instrumento,
-                                                 abrangencia='fulldisk',
-                                                 banda=banda,
-                                                 filtro=filtro)
+            imagem = current_wallpaper.get_image(
+                resolucao='1808x1808',
+                satelite=satelite,
+                instrumento=instrumento,
+                abrangencia='fulldisk',
+                banda=banda,
+                filtro=filtro
+            )
             with open(file='recente.picke', mode='rb') as recent:
                 datahora_nova = pickle.load(recent)
             if datahora_nova != datahora_antiga:
@@ -69,24 +65,21 @@ def runner(satelite, instrumento, banda, filtro):
             print(exc)
             time.sleep(120)
         time.sleep(5)
-
-# -------------------------------------------------------------------------------------------------------------------- #
-
-
+# ----------------------------------------------------------- #
 def run():
-
     print(f' .v.\u03B1.0.')
     print('.' + ' GOESWallpaper '.center(69, '-') + '.\n')
     config_dict = partida()
     print('\n.' + ' GOESWallpaper iniciado '.center(69, '-') + '.')
     print('Aproveite a vista!'.center(71) + '\n')
     print('hora da busca | atualização da imagem'.center(71))
-    runner(satelite=config_dict['satélite'],
-           instrumento=config_dict['instrumento'],
-           banda=config_dict['banda'],
-           filtro=config_dict['filtro'])
+    runner(
+        satelite=config_dict['satélite'],
+        instrumento=config_dict['instrumento'],
+        banda=config_dict['banda'],
+        filtro=config_dict['filtro']
+    )
 
 # ==================================================================================================================== #
-
 
 run()

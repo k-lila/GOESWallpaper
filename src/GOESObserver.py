@@ -1,10 +1,8 @@
-from source import biblioteca_central as bib
+from src import biblioteca_central as bib
 
 # ==================================================================================================================== #
 
-
 class GOESObserver(object):
-
     def __init__(self, satelite: str, instrumento: str, abrangencia: str, filtro=None, banda=None):
         self.html_root = f'https://cdn.star.nesdis.noaa.gov/{satelite}/'
         self.satelite = satelite
@@ -16,7 +14,6 @@ class GOESObserver(object):
         self.df_files = None
         self.df_imagens = None
         self.info = self._getinfo()
-
     def __str__(self):
         sep = f'+{"-" * 80}+'
         sep2 = f'+{"-" * 152}+'
@@ -26,11 +23,13 @@ class GOESObserver(object):
         if self.satelite == 'GOES18':
             print('Geostationary Operational Environmental Satellite 18 (GOES18)'.center(80))
         print(sep)
-        lista = [f' Instrumento: {self.instrumento}',
-                 f' Abrangência: {self.abrangencia}',
-                 f' Filtro: {self.filtro}',
-                 f' Banda: {self.banda}',
-                 f' Diretório: {self.diretorio}']
+        lista = [
+            f' Instrumento: {self.instrumento}',
+            f' Abrangência: {self.abrangencia}',
+            f' Filtro: {self.filtro}',
+            f' Banda: {self.banda}',
+            f' Diretório: {self.diretorio}'
+        ]
         for atributo in lista:
             print(f'{atributo}')
         print(sep2)
@@ -48,15 +47,11 @@ class GOESObserver(object):
         except:
             pass
         return ''
-
-# -------------------------------------------------------------------------------------------------------------------- #
-
+# ------------------------------------------------------------------------- #
     def _getinfo(self):
         if self.abrangencia == 'fulldisk':
             return self._get_fulldisk()
-
-# -------------------------------------------------------------------------------------------------------------------- #
-
+# ---------------------------------------- #
     def _get_fulldisk(self):
         gate = None
         key = None
@@ -70,14 +65,12 @@ class GOESObserver(object):
             aqui = aqui(self.filtro, self.banda)
             gate = {'FD', aqui}
             key = {'GLM', 'EXTENT3'}
-        diretorios = bib.iteradorMaluco(self.html_root, bib.filtroPesquisa, gate=gate, key=key)
+        diretorios = bib.motor(self.html_root, bib.filtroPesquisa, gate=gate, key=key)
         for diretorio in diretorios:
             if diretorio.split('/')[-2] == aqui:
                 self.diretorio = diretorio
         self.df_files = bib.getFiles(self.diretorio)
-
-# -------------------------------------------------------------------------------------------------------------------- #
-
+# ------------------------------------------------------------------------------------ #
     def set_imagery(self, resolucao, data=None):
         dataframe = bib.imageFinder(dataframe=self.df_files,
                                     resolucao=resolucao,
