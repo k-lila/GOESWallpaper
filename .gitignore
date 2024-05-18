@@ -1,3 +1,5 @@
 venv/
-config.picke
-recente.picke
+config.pickle
+recente.pickle
+src/__pycache__
+
