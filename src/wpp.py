@@ -53,6 +53,8 @@ class GOESWallpaper(object):
             posicao_central = ((nova_resolucao[0] - imagem.size[0]) // 2,
                                (nova_resolucao[1] - imagem.size[1]) // 2)
             wallpaper.paste(imagem, posicao_central)
-            wallpaper.save('/home/k-lila/Pictures/Wallpapers/wallpaper.jpg')
+            with open('caminho.txt', 'r') as arquivo:
+                caminho = arquivo.read()
+            wallpaper.save(caminho)
 
 # ==================================================================================================================== #
