@@ -3,7 +3,7 @@ import re
 import requests
 import pandas as pd
 
-timeout = 1
+timeout = 5
 
 # ==================================================================================================================== #
 # retorna uma str contendo o html do link
